@@ -10,11 +10,11 @@ import toast from "react-hot-toast";
 
 export default function LoginForm() {
   const [user, setuser] = useState({
-    email:"",
-    password:"",
+    email: "",
+    password: "",
   });
   const [loading, isLoading] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
   async function loginSubmit(e) {
     isLoading(true);
@@ -23,8 +23,7 @@ export default function LoginForm() {
     try {
       const response = await axios.post("/api/login", user);
       console.log(response);
-      router.push("/")
-
+      router.push("/");
     } catch (error) {
       toast.error("Login Failed ");
       console.log("Login failed" + error);
@@ -33,7 +32,9 @@ export default function LoginForm() {
     }
   }
 
-  return loading?(<TextTitle title={"processing..."} /> ) : (
+  return loading ? (
+    <TextTitle title={"processing..."} />
+  ) : (
     <form
       style={{
         width: "fit-content",
@@ -123,10 +124,7 @@ export default function LoginForm() {
             color: "white",
             textDecoration: "none",
             fontWeight: "lighter",
-          }}
-        >
-          Don't have an account? Sign Up
-        </Link>
+          }}>Did not have an account? Sign Up</Link>
       </div>
     </form>
   );
