@@ -7,11 +7,9 @@ export function LogoutButton({children}){
     async function logoutClick(){
         try {
             const response = await axios.get("/api/logout");
-            console.log(response);
             router.push("/login")
 
         } catch (error) {
-            console.log(error + " failed to logout");
         }
     }
     return(

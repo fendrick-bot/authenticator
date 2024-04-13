@@ -10,7 +10,7 @@ export function middleware(request){
     if( isAccessible && token){
         return NextResponse.redirect(new URL('/' , request.nextUrl));
     }
-    if( !isAccessible && !token){
+    if( !isAccessible && !token && path !== "/"){
         return NextResponse.redirect(new URL('/login' , request.nextUrl));
     }
 }
@@ -19,5 +19,6 @@ export const config ={
         '/',
         '/login',
         '/signup',
+        '/myprofile'
     ]
 }

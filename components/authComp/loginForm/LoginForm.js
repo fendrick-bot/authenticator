@@ -19,14 +19,11 @@ export default function LoginForm() {
   async function loginSubmit(e) {
     isLoading(true);
     e.preventDefault();
-    console.log(user);
     try {
       const response = await axios.post("/api/login", user);
-      console.log(response);
       router.push("/");
     } catch (error) {
       toast.error("Login Failed ");
-      console.log("Login failed" + error);
     } finally {
       isLoading(false);
     }

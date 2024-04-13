@@ -20,14 +20,11 @@ export function SignupForm() {
   async function signupSubmit(e) {
     isLoading(true);
     e.preventDefault();
-    console.log(user);
     try {
       const response = await axios.post("/api/signup", user);
-      console.log(response);
       router.push("/login");
     } catch (error) {
       toast.error("Sign up Failed ");
-      console.log("sign up failed" + error);
     } finally {
       isLoading(false);
     }
