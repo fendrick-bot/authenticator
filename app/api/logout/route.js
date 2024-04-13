@@ -8,7 +8,7 @@ export async function GET() {
       success: true,
     });
     cookies().delete('token');
-    response.cookies.delete('token');
+    // response.cookies.delete('token');
     return response;
   } catch (error) {
     NextResponse.json(
