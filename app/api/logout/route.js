@@ -11,7 +11,7 @@ export async function GET() {
     // response.cookies.delete('token');
     return response;
   } catch (error) {
-    NextResponse.json(
+    return NextResponse.json(
       {
         error: "logout failed",
       },
