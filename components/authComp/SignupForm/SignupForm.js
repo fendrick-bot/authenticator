@@ -3,7 +3,6 @@ import { Button } from "@/components/Button/Button";
 import { TextLabel } from "@/components/TextLabel/TextLabel";
 import { TextTitle } from "@/components/TextTitle/TextTile";
 import axios from "axios";
-import { Fascinate } from "next/font/google";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
