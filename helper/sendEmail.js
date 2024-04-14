@@ -22,16 +22,18 @@ export const sendEmail = async ({ email, verificationType, userId }) => {
 
 
     var transport = nodemailer.createTransport({
-      host: "sandbox.smtp.mailtrap.io",
-      port: 2525,
-      auth: {
+        service: 'gmail',
+        host:"smtp.gmail.com",
+        port: 587,
+        secure:false,
+        auth: {
         user: process.env.EMAIL,
         pass: process.env.EMAILPASSWORD,
-      },
+    }
     });
 
     const mailOptions = {
-      from: "fendrick@gmail.com",
+      from: { name: "Authenticator" , address :process.env.EMAIL} ,
       to: email,
       subject:
         verificationType == "VERIFY"
@@ -52,7 +54,14 @@ export const sendEmail = async ({ email, verificationType, userId }) => {
         <p>Team Authenticator</p>`,
     };
 
-    const mailresponse = await transport.sendMail(mailOptions);
+    // console.log("Sending email");
+    const mailresponse = await transport.sendMail(mailOptions, function(error, info){
+        if (error) {
+        console.log(error);
+        } else {
+        console.log('Email sent: ' + info.response);}
+        });
+    // console.log(mailresponse);
     return mailresponse;
   } catch (error) {
     throw new Error(error.message);
