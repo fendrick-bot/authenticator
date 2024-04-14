@@ -48,6 +48,10 @@ export function CheckUser() {
       <ViewProfile>
         <Button btn_text={"View Profile"} />
       </ViewProfile>
+
+
+
+      
     </div>
   );
 }

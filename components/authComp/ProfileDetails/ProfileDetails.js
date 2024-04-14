@@ -12,8 +12,20 @@ export default function ProfileDetails() {
     id: "not found",
     username: "not found",
     email: "not found",
+    isVerified: false,
   });
   const [loading, isLoading] = useState(true);
+  const [mailSent, setMailSent] = useState(false);
+
+  async function verifyClick() {
+    try {
+      setMailSent(true)
+      const response = await axios.post("/api/sendVerificationMail" , data);
+      // console.log(response)
+    } catch (error) {
+      console.log("unable to send email");
+    }
+  }
 
   async function checkLogin() {
     try {
@@ -24,6 +36,7 @@ export default function ProfileDetails() {
         username: res.username,
         email: res.email,
         id: res._id,
+        isVerified: res.isVerified,
       });
     } catch (error) {
     } finally {
@@ -52,17 +65,47 @@ export default function ProfileDetails() {
         padding: "20px",
       }}
     >
-        <TextTitle title={"User Details: "} />
-        <br />
-        <br />
-        <TextLabel label_text={"User Id :- "} /><span style={{color:"greenyellow"}}>{data.id}</span>
-        <br />
-        <TextLabel label_text={"Username :- "} /><span style={{color:"greenyellow"}}>{data.username}</span>
-        <br />
-        <TextLabel label_text={"Email :- "} /><span style={{color:"greenyellow"}}>{data.email}</span>
-        <br /><br /><br />
+      <TextTitle title={"User Details: "} />
+      <br />
+      <br />
+      <TextLabel label_text={"User Id :- "} />
+      <span style={{ color: "greenyellow" }}>{data.id}</span>
+      <br />
+      <TextLabel label_text={"Username :- "} />
+      <span style={{ color: "greenyellow" }}>{data.username}</span>
+      <br />
+      <TextLabel label_text={"Email :- "} />
+      <span style={{ color: "greenyellow" }}>{data.email}</span>
+      <br />
+      {data.isVerified ? (
+        <div>
+          <TextLabel label_text={"Email Verified :- "} />
+          <span style={{ color: "greenyellow" }}>True</span>{" "}
+        </div>
+      ) : (
+        <div>
+          <TextLabel label_text={"Email Verified :- "} />
+          <span style={{ color: "greenyellow" }}>False</span> <br /> <br />
+          {mailSent ? (
+            <span style={{ color: "skyblue" }}>
+              Verification link has been sent to your email
+            </span>
+          ) : (
+            <span
+              style={{ color: "skyblue", cursor: "pointer" }}
+              onClick={verifyClick}
+            >
+              Verify Email
+            </span>
+          )}
+        </div>
+      )}
+      <br />
+      <br />
 
-        <LogoutButton><Button btn_text={"Logout"} /></LogoutButton>
+      <LogoutButton>
+        <Button btn_text={"Logout"} />
+      </LogoutButton>
     </div>
   );
 }
