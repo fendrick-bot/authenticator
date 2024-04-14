@@ -5,7 +5,7 @@ import { ViewProfile } from "@/components/authComp/ViewProfile/ViewProfile";
 import axios from "axios";
 import { useState, useEffect } from "react";
 
-export default function verifyemail() {
+export default function Verifyemail() {
   const [token, setToken] = useState("");
   const [verified, isVerifying] = useState(true);
   const [invalid, setInvalid] = useState(false);
