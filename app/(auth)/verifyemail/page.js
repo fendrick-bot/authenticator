@@ -3,7 +3,6 @@ import { Button } from "@/components/Button/Button";
 import { TextTitle } from "@/components/TextTitle/TextTile";
 import { ViewProfile } from "@/components/authComp/ViewProfile/ViewProfile";
 import axios from "axios";
-import Link from "next/link";
 import { useState, useEffect } from "react";
 
 export default function verifyemail() {
@@ -11,9 +10,9 @@ export default function verifyemail() {
   const [verified, isVerifying] = useState(true);
   const [invalid, setInvalid] = useState(false);
 
-  async function verifyEmail() {
+  async function VerifyEmail() {
     try {
-      const response = await axios.post("/api/emailverification", { token });
+      await axios.post("/api/emailverification", { token });
       isVerifying(false);
 
       //   console.log(response)
@@ -29,7 +28,7 @@ export default function verifyemail() {
   }, []);
   useEffect(() => {
     if (token.length > 0) {
-      verifyEmail();
+      VerifyEmail();
     }
   }, [token]);
 
