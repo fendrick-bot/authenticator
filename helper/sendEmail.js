@@ -54,14 +54,14 @@ export const sendEmail = async ({ email, verificationType, userId }) => {
         <p>Team Authenticator</p>`,
     };
 
-    // console.log("Sending email");
+    console.log("Sending email");
     const mailresponse = await transport.sendMail(mailOptions, function(error, info){
         if (error) {
         console.log(error);
         } else {
         console.log('Email sent: ' + info.response);}
         });
-    // console.log(mailresponse);
+    console.log(mailresponse);
     return mailresponse;
   } catch (error) {
     throw new Error(error.message);

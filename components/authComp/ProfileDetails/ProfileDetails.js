@@ -21,7 +21,7 @@ export default function ProfileDetails() {
     try {
       setMailSent(true)
       const response = await axios.post("/api/sendVerificationMail" , data);
-      // console.log(response)
+      console.log(response)
     } catch (error) {
       console.log("unable to send email");
     }
