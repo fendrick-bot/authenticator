@@ -31,6 +31,19 @@ export const sendEmail = async ({ email, verificationType, userId }) => {
       },
     });
 
+    await new Promise((resolve, reject) => {
+      // verify connection configuration
+      transport.verify(function (error, success) {
+          if (error) {
+              console.log(error);
+              reject(error);
+          } else {
+              console.log("Server is ready to take our messages");
+              resolve(success);
+          }
+      });
+  });
+
     var mailOptions = {
       from: { name: "Authenticator", address: "noreply.authenticator.2024@gmail.com" },
       to: email,
@@ -52,15 +65,30 @@ export const sendEmail = async ({ email, verificationType, userId }) => {
     };
 
     console.log("Sending email");
-    const mailresponse = transport.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log("email not sent " + error);
-      } else {
-        console.log("Email sent: " + info.response);
-      }
-    });
+
+    const mailresponse = await new Promise((resolve, reject) => {
+      // send mail
+      transport.sendMail(mailOptions, (err, info) => {
+          if (err) {
+              console.error(err);
+              reject(err);
+          } else {
+              console.log(info);
+              resolve(info);
+          }
+      });
+  });
+
+    // const mailresponse = transport.sendMail(mailOptions, (error, info) => {
+    //   if (error) {
+    //     console.log("email not sent " + error);
+    //   } else {
+    //     console.log("Email sent: " + info.response);
+    //   }
+    // });
     console.log(mailresponse);
     return mailresponse;
+    
   } catch (error) {
     throw new Error(error.message);
   }
