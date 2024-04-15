@@ -19,8 +19,8 @@ export const sendEmail = async ({ email, verificationType, userId }) => {
     }
 
     var transport = nodemailer.createTransport({
-      service: "gmail",
-      // host: "smtp.gmail.com",
+      host: "smtp.gmail.com",
+      ignoreTLS:false,
       port: 465,
       secure:true,
       auth: {
@@ -30,7 +30,7 @@ export const sendEmail = async ({ email, verificationType, userId }) => {
     });
 
     var mailOptions = {
-      from: { name: "Authenticator", address: process.env.EMAIL },
+      from: { name: "Authenticator", address: "noreply.authenticator.2024@gmail.com" },
       to: email,
       subject:
         verificationType == "VERIFY"
