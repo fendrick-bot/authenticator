@@ -19,8 +19,10 @@ export const sendEmail = async ({ email, verificationType, userId }) => {
     }
 
     var transport = nodemailer.createTransport({
+      service:"gmail",
       host: "smtp.gmail.com",
       ignoreTLS:false,
+      tls: { rejectUnauthorized: false},
       port: 465,
       secure:true,
       auth: {
@@ -52,7 +54,7 @@ export const sendEmail = async ({ email, verificationType, userId }) => {
     console.log("Sending email");
     const mailresponse = transport.sendMail(mailOptions, (error, info) => {
       if (error) {
-        console.log(error);
+        console.log("email not sent " + error);
       } else {
         console.log("Email sent: " + info.response);
       }
