@@ -20,15 +20,15 @@ export const sendEmail = async ({ email, verificationType, userId }) => {
 
     var transport = nodemailer.createTransport({
       service: "gmail",
-      host: "smtp.gmail.com",
-      port: 587,
+      // host: "smtp.gmail.com",
+      // port: 587,
       auth: {
         user: process.env.EMAIL,
         pass: process.env.EMAILPASSWORD,
       },
     });
 
-    const mailOptions = {
+    var mailOptions = {
       from: { name: "Authenticator", address: process.env.EMAIL },
       to: email,
       subject:
@@ -49,16 +49,13 @@ export const sendEmail = async ({ email, verificationType, userId }) => {
     };
 
     console.log("Sending email");
-    const mailresponse = await transport.sendMail(
-      mailOptions,
-      function (error, info) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log("Email sent: " + info.response);
-        }
+    const mailresponse = transport.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
       }
-    );
+    });
     console.log(mailresponse);
     return mailresponse;
   } catch (error) {
