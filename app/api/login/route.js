@@ -9,42 +9,58 @@ connect();
 export async function POST(request) {
   try {
     // getting user details
+    console.log(request);
     const reqBody = await request.json();
-    const {email, password} = reqBody
+    const { email, password, login_type } = reqBody;
 
     // checking user is exists
-    const user = await User.findOne({email})
-    if( !user){
-        return NextResponse.json({error: "user doesnot exist"}, {status: 400})
+    const user = await User.findOne({ email });
+    if (!user) {
+      if (login_type == "google") {
+        try {
+          const response = await axios.post("/api/signup", request);
+          user = await User.findOne({ email });
+        } catch (error) {
+          console.log("google Sign up Failed ");
+        }
+      } else {
+        return NextResponse.json(
+          { error: "user doesnot exist" },
+          { status: 400 }
+        );
+      }
     }
     // matching password
     const validPassword = await bcryptjs.compare(password, user.password);
 
-    if(!validPassword){
-        return NextResponse.json({
-            error:"Invalid password"
-        },{status:400})
+    if (!validPassword) {
+      return NextResponse.json(
+        {
+          error: "Invalid password",
+        },
+        { status: 400 }
+      );
     }
 
     //creating token data
     const tokenData = {
-        id:user._id,
-        username: user.username,
-        email: user.email
-    }
+      id: user._id,
+      username: user.username,
+      email: user.email,
+    };
     //create token
-    const token = await jwt.sign(tokenData,  process.env.TOKEN_SECRET, {expiresIn: "1d"});
-    
-    
+    const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET, {
+      expiresIn: "1d",
+    });
+
     const response = NextResponse.json({
-        message: "Login Success",
-        success: true,
-    })
+      message: "Login Success",
+      success: true,
+    });
     // saving login cookie in browser
-    response.cookies.set("token", token, {httpOnly: true})
+    response.cookies.set("token", token, { httpOnly: true });
 
     return response;
-    
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

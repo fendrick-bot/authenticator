@@ -4,16 +4,18 @@ import { connect } from "@/dbConfig/dbConfig";
 sendEmail;
 
 connect();
-export async function POST(request) {
+export async function POST(request, verificationType) {
   try {
-    const reqBody = await request.json();
-    const { email, id } = reqBody;
-    console.log(email , id);
-    await sendEmail({
-      email,
-      verificationType: "VERIFY",
-      userId: id,
-    });
+    if( verificationType == "VERIFY"){
+      const reqBody = await request.json();
+      const { email, id } = reqBody;
+      console.log(email , id);
+      await sendEmail({
+        email,
+        verificationType: "VERIFY",
+        userId: id,
+      });
+    }
     return NextResponse.json({
       message: "mail sent successfull",
       success: true,
