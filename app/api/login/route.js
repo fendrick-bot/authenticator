@@ -14,11 +14,11 @@ export async function POST(request) {
     const { email, password, login_type } = reqBody;
 
     // checking user is exists
-    const user = await User.findOne({ email });
+    let user = await User.findOne({ email });
     if (!user) {
       if (login_type == "google") {
         try {
-          const response = await axios.post("/api/signup", request);
+          const res = await axios.post("/api/signup", request);
           user = await User.findOne({ email });
         } catch (error) {
           console.log("google Sign up Failed ");
