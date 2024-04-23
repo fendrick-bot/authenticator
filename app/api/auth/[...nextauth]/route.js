@@ -18,7 +18,7 @@ const handler = nextAuth({
           const response = await axios.post("/api/login", {
             username: user.name,
             email: user.email,
-            password: process.env.TOKENSECRET,
+            password: process.env.TOKEN_SECRET,
             login_type: "google",
           });
           console.log(response);
