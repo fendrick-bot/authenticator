@@ -10,7 +10,7 @@ export async function POST(request) {
   try {
     // getting user details
     console.log(request);
-    const reqBody = await request.json();
+    let reqBody = await request.json();
     const { email, password, login_type } = reqBody;
 
     // checking user is exists
